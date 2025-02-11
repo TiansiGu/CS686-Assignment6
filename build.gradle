@@ -21,7 +21,7 @@ dependencies {
     //jdbc
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    runtimeOnly("mysql:mysql-connector-java")
+    implementation("mysql:mysql-connector-java")
 
     // flyway
     implementation("io.micronaut.flyway:micronaut-flyway")

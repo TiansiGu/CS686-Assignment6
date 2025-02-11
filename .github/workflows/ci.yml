@@ -67,7 +67,7 @@ jobs:
 
       - name: Build and Apply Flyway Migrations
         run: |
-          ./gradlew flywayMigrate --stacktrace \
+          ./gradlew flywayMigrate --debug \
           -Dflyway.url=jdbc:mysql://localhost:3306/micronaut_db \
           -Dflyway.user=root \
           -Dflyway.password=password
