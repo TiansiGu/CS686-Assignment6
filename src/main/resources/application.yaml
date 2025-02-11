@@ -12,3 +12,6 @@ flyway:
     default:
       enabled: true
       create-schemas: true
+      url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:micronaut_db}
+      user: ${DB_USER:micronaut_user}
+      password: ${DB_PASSWORD:password}
