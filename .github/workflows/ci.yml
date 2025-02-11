@@ -64,24 +64,13 @@ jobs:
           mysql -h 127.0.0.1 -u root -proot -e "
           GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
           FLUSH PRIVILEGES;"
-    
 
-    #      - name: Create `books` Table in MySQL
-#        run: |
-#          mysql -h 127.0.0.1 -u micronaut_user -ppassword micronaut_db -e "
-#          CREATE TABLE books (
-#            id BIGINT AUTO_INCREMENT PRIMARY KEY,
-#            name VARCHAR(255) NOT NULL,
-#            author VARCHAR(255) NOT NULL,
-#            price DOUBLE NOT NULL,
-#            total_page INT NOT NULL
-#          );"
       - name: Build and Apply Flyway Migrations
         env:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_NAME: micronaut_db
-          DB_USER: micronaut_user
+          DB_USER: root
           DB_PASSWORD: password
         run: |
             ./gradlew flywayMigrate --stacktrace
@@ -89,12 +78,8 @@ jobs:
       - name: Build and Test Application
         env:
           DB_HOST: 127.0.0.1
-          DB_USER: micronaut_user
+          DB_USER: root
           DB_PASSWORD: password
         run: |
-          ./gradlew build
+          ./gradlew clean build
           ./gradlew test
-
-      - name: Print Gradle Problem Report
-        if: failure()
-        run: cat build/reports/problems/problems-report.html || true
