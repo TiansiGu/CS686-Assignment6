@@ -53,23 +53,18 @@ jobs:
           sudo apt-get install -y mysql-client
           mysql --protocol=tcp -h 127.0.0.1 -u root -ppassword -e "SHOW DATABASES;"
 
-#      - name: Verify MySQL Connection Before Flyway
-#        run: |
-#          mysql -h 127.0.0.1 -u root -ppassword -e "USE micronaut_db;"
-#
-#      - name: Ensure MySQL User Has Correct Permissions
-#        run: |
-#          mysql -h 127.0.0.1 -u root -ppassword -e "
-#          GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
-#          FLUSH PRIVILEGES;"
-
-#      - name: Build and Apply Flyway Migrations
-#        run: |
-#          ./gradlew flywayMigrate --debug \
-#          -Dflyway.url=jdbc:mysql://localhost:3306/micronaut_db \
-#          -Dflyway.user=root \
-#          -Dflyway.password=password
-
       - name: Build and Test Application
         run: |
           ./gradlew clean build --stacktrace
+
+      - name: Check if "books" table exists
+        run: |
+          TABLE_EXISTS=$(mysql -h 127.0.0.1 -u root -ppassword -D micronaut_db -N -B -e \
+            "SELECT COUNT(*) FROM information_schema.tables WHERE table_name='books';")
+
+          if [ "$TABLE_EXISTS" -eq 1 ]; then
+            echo "Table 'books' exists."
+          else
+            echo "Table 'books' does NOT exist."
+            exit 1
+          fi
