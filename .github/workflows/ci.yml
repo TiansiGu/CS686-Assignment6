@@ -65,23 +65,23 @@ jobs:
           GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
           FLUSH PRIVILEGES;"
 
-      - name: Build and Apply Flyway Migrations
-        env:
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_NAME: micronaut_db
-          DB_USER: root
-          DB_PASSWORD: password
-        run: |
-          echo "=== Printing Environment Variables ==="
-          echo "DB_HOST: $DB_HOST"
-          echo "DB_PORT: $DB_PORT"
-          echo "DB_NAME: $DB_NAME"
-          echo "DB_USER: $DB_USER"
-          echo "DB_PASSWORD: $DB_PASSWORD"
-  
-          echo "=== Running Flyway Migration ==="
-            ./gradlew flywayMigrate --stacktrace
+#      - name: Build and Apply Flyway Migrations
+#        env:
+#          DB_HOST: 127.0.0.1
+#          DB_PORT: 3306
+#          DB_NAME: micronaut_db
+#          DB_USER: root
+#          DB_PASSWORD: password
+#        run: |
+#          echo "=== Printing Environment Variables ==="
+#          echo "DB_HOST: $DB_HOST"
+#          echo "DB_PORT: $DB_PORT"
+#          echo "DB_NAME: $DB_NAME"
+#          echo "DB_USER: $DB_USER"
+#          echo "DB_PASSWORD: $DB_PASSWORD"
+#
+#          echo "=== Running Flyway Migration ==="
+#            ./gradlew flywayMigrate --stacktrace
 
       - name: Build and Test Application
         env:
@@ -89,5 +89,5 @@ jobs:
           DB_USER: root
           DB_PASSWORD: password
         run: |
-          ./gradlew clean build
+          ./gradlew clean build --stacktrace
           ./gradlew test
