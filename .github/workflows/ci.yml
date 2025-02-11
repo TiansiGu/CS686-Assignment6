@@ -73,3 +73,16 @@ jobs:
       - name: Build and Test Application
         run: |
           ./gradlew clean build --stacktrace
+
+      - name: Check if db exist
+        run: |
+          TABLE_EXISTS=$(mysql -h 127.0.0.1 -u root -ppassword -D micronaut_db -N -B -e \
+          "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='micronaut_db' AND table_name='books';")
+        
+          if [ "$TABLE_EXISTS" -eq "1" ]; then
+          echo "✅ Table 'books' exists."
+          else
+          echo "❌ Table 'books' does NOT exist."
+          exit 1
+          fi
+
