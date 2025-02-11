@@ -73,6 +73,14 @@ jobs:
           DB_USER: root
           DB_PASSWORD: password
         run: |
+          echo "=== Printing Environment Variables ==="
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_PORT: $DB_PORT"
+          echo "DB_NAME: $DB_NAME"
+          echo "DB_USER: $DB_USER"
+          echo "DB_PASSWORD: $DB_PASSWORD"
+  
+          echo "=== Running Flyway Migration ==="
             ./gradlew flywayMigrate --stacktrace
 
       - name: Build and Test Application
