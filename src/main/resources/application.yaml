@@ -6,7 +6,7 @@ datasources:
     url: jdbc:mysql://127.0.0.1:3306/micronaut_db
     username: root
     password: password
-    driverClassName: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
 flyway:
   datasources:
     default:
