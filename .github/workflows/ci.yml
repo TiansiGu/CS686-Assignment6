@@ -54,9 +54,19 @@ jobs:
         run: |
           sudo apt-get install -y mysql-client
           mysql --protocol=tcp -h 127.0.0.1 -u micronaut_user -ppassword -e "SHOW DATABASES;"
-      
 
-      #      - name: Create `books` Table in MySQL
+      - name: Verify MySQL Connection Before Flyway
+        run: |
+          mysql -h 127.0.0.1 -u micronaut_user -ppassword -e "USE micronaut_db;"
+
+      - name: Ensure MySQL User Has Correct Permissions
+        run: |
+          mysql -h 127.0.0.1 -u root -proot -e "
+          GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
+          FLUSH PRIVILEGES;"
+    
+
+    #      - name: Create `books` Table in MySQL
 #        run: |
 #          mysql -h 127.0.0.1 -u micronaut_user -ppassword micronaut_db -e "
 #          CREATE TABLE books (
