@@ -50,16 +50,19 @@ jobs:
             sleep 3
           done
 
-      - name: Create `books` Table in MySQL
+#      - name: Create `books` Table in MySQL
+#        run: |
+#          mysql -h 127.0.0.1 -u micronaut_user -ppassword micronaut_db -e "
+#          CREATE TABLE books (
+#            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+#            name VARCHAR(255) NOT NULL,
+#            author VARCHAR(255) NOT NULL,
+#            price DOUBLE NOT NULL,
+#            total_page INT NOT NULL
+#          );"
+      - name: Run Flyway Migrations
         run: |
-          mysql -h 127.0.0.1 -u micronaut_user -ppassword micronaut_db -e "
-          CREATE TABLE books (
-            id BIGINT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            author VARCHAR(255) NOT NULL,
-            price DOUBLE NOT NULL,
-            total_page INT NOT NULL
-          );"
+          ./gradlew flywayMigrate
 
       - name: Build and Test Application
         env:
