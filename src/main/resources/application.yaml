@@ -6,12 +6,8 @@ datasources:
     url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:micronaut_db}
     username: ${DB_USER:root}
     password: ${DB_PASSWORD:password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
 flyway:
   datasources:
     default:
       enabled: true
-      create-schemas: true
-      url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:micronaut_db}
-      username: ${DB_USER:root}
-      password: ${DB_PASSWORD:password}

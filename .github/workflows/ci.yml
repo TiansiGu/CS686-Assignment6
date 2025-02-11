@@ -61,7 +61,7 @@ jobs:
 
       - name: Ensure MySQL User Has Correct Permissions
         run: |
-          mysql -h 127.0.0.1 -u root -proot -e "
+          mysql -h 127.0.0.1 -u root -ppassword -e "
           GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
           FLUSH PRIVILEGES;"
 
