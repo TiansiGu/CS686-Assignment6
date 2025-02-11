@@ -3,11 +3,14 @@ micronaut:
     name: micronaut-crud
 datasources:
   default:
-    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:micronaut_db}
-    username: ${DB_USER:root}
-    password: ${DB_PASSWORD:password}
+    url: jdbc:mysql://127.0.0.1:3306/micronaut_db
+    username: root
+    password: password
     driverClassName: com.mysql.cj.jdbc.Driver
 flyway:
   datasources:
     default:
       enabled: true
+      url: jdbc:mysql://127.0.0.1:3306/micronaut_db
+      username: root
+      password: password
