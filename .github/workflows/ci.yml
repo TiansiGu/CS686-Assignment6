@@ -53,11 +53,11 @@ jobs:
       - name: Verify MySQL connection
         run: |
           sudo apt-get install -y mysql-client
-          mysql --protocol=tcp -h 127.0.0.1 -u micronaut_user -ppassword -e "SHOW DATABASES;"
+          mysql --protocol=tcp -h 127.0.0.1 -u root -ppassword -e "SHOW DATABASES;"
 
       - name: Verify MySQL Connection Before Flyway
         run: |
-          mysql -h 127.0.0.1 -u micronaut_user -ppassword -e "USE micronaut_db;"
+          mysql -h 127.0.0.1 -u root -ppassword -e "USE micronaut_db;"
 
       - name: Ensure MySQL User Has Correct Permissions
         run: |
@@ -65,23 +65,9 @@ jobs:
           GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
           FLUSH PRIVILEGES;"
 
-#      - name: Build and Apply Flyway Migrations
-#        env:
-#          DB_HOST: 127.0.0.1
-#          DB_PORT: 3306
-#          DB_NAME: micronaut_db
-#          DB_USER: root
-#          DB_PASSWORD: password
-#        run: |
-#          echo "=== Printing Environment Variables ==="
-#          echo "DB_HOST: $DB_HOST"
-#          echo "DB_PORT: $DB_PORT"
-#          echo "DB_NAME: $DB_NAME"
-#          echo "DB_USER: $DB_USER"
-#          echo "DB_PASSWORD: $DB_PASSWORD"
-#
-#          echo "=== Running Flyway Migration ==="
-#            ./gradlew flywayMigrate --stacktrace
+      - name: Build and Apply Flyway Migrations
+        run: |
+          ./gradlew flywayMigrate --stacktrace
 
       - name: Build and Test Application
         env:
