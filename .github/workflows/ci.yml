@@ -62,3 +62,7 @@ jobs:
         run: |
           ./gradlew build
           ./gradlew test
+
+      - name: Print Gradle Problem Report
+        if: failure()
+        run: cat build/reports/problems/problems-report.html || true
