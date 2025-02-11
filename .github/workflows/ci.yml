@@ -50,7 +50,13 @@ jobs:
             sleep 3
           done
 
-#      - name: Create `books` Table in MySQL
+      - name: Verify MySQL connection
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --protocol=tcp -h 127.0.0.1 -u micronaut_user -ppassword -e "SHOW DATABASES;"
+      
+
+      #      - name: Create `books` Table in MySQL
 #        run: |
 #          mysql -h 127.0.0.1 -u micronaut_user -ppassword micronaut_db -e "
 #          CREATE TABLE books (
@@ -60,9 +66,15 @@ jobs:
 #            price DOUBLE NOT NULL,
 #            total_page INT NOT NULL
 #          );"
-      - name: Run Flyway Migrations
+      - name: Build and Apply Flyway Migrations
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_NAME: micronaut_db
+          DB_USER: micronaut_user
+          DB_PASSWORD: password
         run: |
-          ./gradlew flywayMigrate
+            ./gradlew flywayMigrate --stacktrace
 
       - name: Build and Test Application
         env:
