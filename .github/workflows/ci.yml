@@ -53,23 +53,6 @@ jobs:
           sudo apt-get install -y mysql-client
           mysql --protocol=tcp -h 127.0.0.1 -u root -ppassword -e "SHOW DATABASES;"
 
-#      - name: Verify MySQL Connection Before Flyway
-#        run: |
-#          mysql -h 127.0.0.1 -u root -ppassword -e "USE micronaut_db;"
-#
-#      - name: Ensure MySQL User Has Correct Permissions
-#        run: |
-#          mysql -h 127.0.0.1 -u root -ppassword -e "
-#          GRANT ALL PRIVILEGES ON micronaut_db.* TO 'micronaut_user'@'%';
-#          FLUSH PRIVILEGES;"
-
-#      - name: Build and Apply Flyway Migrations
-#        run: |
-#          ./gradlew flywayMigrate --debug \
-#          -Dflyway.url=jdbc:mysql://localhost:3306/micronaut_db \
-#          -Dflyway.user=root \
-#          -Dflyway.password=password
-
       - name: Build and Test Application
         run: |
           ./gradlew clean build --stacktrace
