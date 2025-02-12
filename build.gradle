@@ -3,14 +3,34 @@ plugins {
     id("io.micronaut.application") version "4.4.2"
     id("io.micronaut.test-resources") version "4.4.2"
     id("io.micronaut.aot") version "4.4.2"
-    id 'maven-publish'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '1.2.1'
 }
 
 version = "0.1"
-group = "com.piyal"
+group = "com.github.TiansiGu"
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {  // Defines the package to publish
+            from components.java
+            artifactId = "micronaut-crud"
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/TiansiGu/CS686-Assignment6")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
 }
 
 dependencies {
